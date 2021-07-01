@@ -65,6 +65,10 @@ def game_counter(name, current, dice):
 
     prev = current
     current = current + dice
+    if current<101:
+        print('\n'+ name + ' moved from ' + str(prev) + ' to ' + str(current) + '\n')
+    else:
+        print("Can't move further...")
 
     if current > 100:
         print(name + ' needs more ' + str(100 - prev) + ' to win the game.\n')
@@ -80,8 +84,6 @@ def game_counter(name, current, dice):
 
     else:
         final = current
-
-    print('\n'+ name + ' moved from ' + str(prev) + ' to ' + str(current) + '\n')
 
     return final
 
@@ -118,18 +120,20 @@ while(1):
     input_ = input('\n' + player + ', ' + random.choice(player_next_turn) + ' Hit ENTER to roll the dice: ')
     print('Rolling the dice....')
     value = roll_dice()
-
-    time.sleep(1)
+    while value%6 == 0:
+        value+=roll_dice()
 
     print(player + ' is moving.....')
     player_pos = game_counter(player,player_pos,value)
 
     winner(player,player_pos)
 
+    time.sleep(1)
+
     print('\nComputer is rolling the dice.....')
     value = roll_dice()
-
-    time.sleep(1)
+    while value%6 == 0:
+        value+=roll_dice()
 
     print(comp + ' is moving.....')
     comp_pos = game_counter(comp,comp_pos,value)
